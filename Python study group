@@ -1,51 +1,50 @@
-#Define original dictionary
-usernames =  {"Sammy": "sammy-shark", "Jamie": "mantishrimp54"}
-#print(usernames)
+import pickle
+import os.path
 
-#Now, set up while loop iterate
-#while True: NOT TYPE THIS!!
+# Point to a file on your disk, in the current directory
+path_to_data = "usernames.pickle"
 
-    #Request user to enter name
+# Check if the pickled file exists:
+if os.path.isfile(path_to_data):
 
+    # Open the pickled file of usernames and get the dictionary from it
+    with open(path_to_data, 'rb') as f:
+        usernames = pickle.load(f)
+
+    # Check if any data was in there
+    print("Loaded usernames: ", usernames)
+
+# Handle missing pickled file
+else:
+    # Define original dictionary
+    usernames = {"Sammy": "sammy-shark", "Jamie": "mantishrimp54"}
+
+    print("Pickled file missing, using: ", usernames, "instead.")
+
+# Request user to enter name
 print("Enter a name:")
 
-#Assign to name variable
-
+# Assign to name variable
 name = input()
 
-#Check whether name is in the dictionary and print feedback
+# Check whether name is in the dictionary and print feedback
 if name in usernames:
     print(usernames[name] + ' ' "is the username of" ' ' + name)
 
 # if the name is not in the dictionary...
 else:
-    #Provide feedback
+    # Provide feedback
     print("I don't have" ' ' + name + ' '"as an username, what is it?")
 
-#Take in a new username for the associated name
+    # Take in a new username for the associated name
     username = input()
 
-#Assign username value to name key
+    # Assign username value to name key
     usernames[name] = username
 
-#Print feedback that the data was updated
+    # Print feedback that the data was updated
     print("Data updated")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    # Update the pickled file, in `write binary` [wb] mode:
+    with open(path_to_data, 'wb') as f:
+        pickle.dump(usernames, f)
